@@ -19,16 +19,20 @@ environ.Env.read_env(BASE_DIR / ".env")
 
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 
-# Railway expone el dominio público en esta variable; lo añadimos automáticamente.
+# Railway expone el dominio público en esta variable.
 RAILWAY_DOMAIN = env("RAILWAY_PUBLIC_DOMAIN", default="")
-if RAILWAY_DOMAIN:
-    ALLOWED_HOSTS.append(RAILWAY_DOMAIN)
 
-CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
-if RAILWAY_DOMAIN:
-    CSRF_TRUSTED_ORIGINS.append(f"https://{RAILWAY_DOMAIN}")
+if DEBUG:
+    ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+    CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
+else:
+    # En producción la app va detrás del proxy de confianza de Railway.
+    # Permitimos todos los hosts (incluido el del healthcheck) para no rechazar peticiones.
+    ALLOWED_HOSTS = ["*"]
+    CSRF_TRUSTED_ORIGINS = ["https://*.railway.app", "https://*.up.railway.app"]
+    if RAILWAY_DOMAIN:
+        CSRF_TRUSTED_ORIGINS.append(f"https://{RAILWAY_DOMAIN}")
 
 
 # --- Aplicaciones ---
