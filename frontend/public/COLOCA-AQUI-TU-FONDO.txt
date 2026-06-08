@@ -1,0 +1,13 @@
+📂 CARPETA DEL FONDO
+====================
+
+✅ Ahora mismo el fondo activo es:  background.jpg
+
+CÓMO CAMBIARLO MÁS ADELANTE:
+- Reemplaza el archivo "background.jpg" por tu nueva imagen (mismo nombre).
+- O si tu nuevo fondo es GIF/MP4 (animado de verdad), ponlo aquí y avísame
+  para conectarlo (hay que ajustar una línea del código).
+
+Después de cambiarlo, refresca la página (http://localhost:5181).
+
+Nota: a la imagen estática se le aplicó un "zoom lento" para que se sienta viva.

@@ -1,0 +1,64 @@
+# Orquesta los contenedores del proyecto.
+# Por ahora: base de datos (db) + backend Django. El frontend React se agrega después.
+
+services:
+  db:
+    image: postgres:16
+    container_name: entrevista_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      # 5434 en tu Mac -> 5432 dentro del contenedor (evita choque con Postgres.app)
+      - "5434:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: entrevista_backend
+    restart: unless-stopped
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      # La API queda en http://localhost:8010 (8001 lo usa AgencySoftware)
+      - "8010:8000"
+    environment:
+      DEBUG: ${DEBUG}
+      SECRET_KEY: ${SECRET_KEY}
+      DATABASE_URL: ${DATABASE_URL}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    container_name: entrevista_frontend
+    restart: unless-stopped
+    command: npm run dev -- --host 0.0.0.0
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      # El formulario queda en http://localhost:5181
+      - "5181:5173"
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
+      # Detección de cambios por sondeo (necesario en Docker sobre Mac)
+      CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_INTERVAL: "300"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
