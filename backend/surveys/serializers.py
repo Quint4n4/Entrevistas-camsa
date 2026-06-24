@@ -63,7 +63,9 @@ class SubmissionDataSerializer(serializers.ModelSerializer):
             "email",
             "whatsapp",
             "perfil",
+            "empresa",
             "edad",
+            "ciudad",
             "consent",
             "priority",
         ]
@@ -115,7 +117,9 @@ class SubmissionDetailSerializer(serializers.ModelSerializer):
             "email",
             "whatsapp",
             "perfil",
+            "empresa",
             "edad",
+            "ciudad",
             "consent",
             "priority",
             "priority_display",
@@ -126,6 +130,9 @@ class SubmissionDetailSerializer(serializers.ModelSerializer):
             "last_activity_at",
             "completed_at",
             "notes_copy",
+            "notes_objeciones",
+            "notes_motivadores",
+            "notes_prioridad",
             "notes_insight",
             "notes_offer",
             "notes_final",
@@ -138,7 +145,15 @@ class NotesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Submission
-        fields = ["notes_copy", "notes_insight", "notes_offer", "notes_final"]
+        fields = [
+            "notes_copy",
+            "notes_objeciones",
+            "notes_motivadores",
+            "notes_prioridad",
+            "notes_insight",
+            "notes_offer",
+            "notes_final",
+        ]
 
 
 # --------------------------------------------------------------------------- #

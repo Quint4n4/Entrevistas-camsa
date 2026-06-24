@@ -26,7 +26,9 @@ const emptyData: SubmissionData = {
   email: "",
   whatsapp: "",
   perfil: "",
+  empresa: "",
   edad: "",
+  ciudad: "",
   consent: false,
   priority: "",
 };
@@ -107,7 +109,9 @@ export function FormApp() {
         email: data.email,
         whatsapp: data.whatsapp,
         perfil: data.perfil,
+        empresa: data.empresa,
         edad: data.edad,
+        ciudad: data.ciudad,
         consent: data.consent,
       });
       next();

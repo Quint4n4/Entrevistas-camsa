@@ -5,6 +5,9 @@ import { ApiError } from "../lib/http";
 
 const EMPTY_NOTES: NotesInput = {
   notes_copy: "",
+  notes_objeciones: "",
+  notes_motivadores: "",
+  notes_prioridad: "",
   notes_insight: "",
   notes_offer: "",
   notes_final: "",
@@ -33,6 +36,9 @@ export function SubmissionDetailView({
     if (detail.data) {
       setNotes({
         notes_copy: detail.data.notes_copy,
+        notes_objeciones: detail.data.notes_objeciones,
+        notes_motivadores: detail.data.notes_motivadores,
+        notes_prioridad: detail.data.notes_prioridad,
         notes_insight: detail.data.notes_insight,
         notes_offer: detail.data.notes_offer,
         notes_final: detail.data.notes_final,
@@ -96,8 +102,10 @@ export function SubmissionDetailView({
                 <div className="label">Perfil</div>
                 <div style={{ marginTop: 8, lineHeight: 1.6 }}>
                   {d.perfil || "—"}
+                  {d.empresa ? ` · ${d.empresa}` : ""}
                   <br />
                   Edad: {d.edad || "—"}
+                  {d.ciudad ? ` · ${d.ciudad}` : ""}
                   <br />
                   <span className={`badge ${d.status === "completed" ? "done" : "prog"}`}>
                     {d.status_display} · {d.progress}%
@@ -138,10 +146,13 @@ export function SubmissionDetailView({
             <div className="notes-grid">
               {(
                 [
-                  ["notes_copy", "Frases para copy de marketing"],
-                  ["notes_insight", "Insight central para estrategia"],
-                  ["notes_offer", "Hipótesis de oferta / ángulo comercial"],
-                  ["notes_final", "Notas finales"],
+                  ["notes_copy", "Frases textuales importantes"],
+                  ["notes_objeciones", "Objeciones detectadas"],
+                  ["notes_motivadores", "Motivadores principales"],
+                  ["notes_prioridad", "Prioridad dominante identificada"],
+                  ["notes_insight", "Insight principal"],
+                  ["notes_offer", "Hipótesis de oferta para este perfil"],
+                  ["notes_final", "Observaciones finales"],
                 ] as [keyof NotesInput, string][]
               ).map(([key, label]) => (
                 <div className="field" key={key}>

@@ -17,7 +17,17 @@ def start_submission(survey: Survey) -> Submission:
 
 def update_submission_data(submission: Submission, data: dict) -> Submission:
     """Autoguardado de los datos del entrevistado y la prioridad."""
-    for field in ("nombre", "email", "whatsapp", "perfil", "edad", "consent", "priority"):
+    for field in (
+        "nombre",
+        "email",
+        "whatsapp",
+        "perfil",
+        "empresa",
+        "edad",
+        "ciudad",
+        "consent",
+        "priority",
+    ):
         if field in data:
             setattr(submission, field, data[field])
     submission.save()

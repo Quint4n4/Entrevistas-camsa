@@ -35,7 +35,9 @@ export interface SubmissionDetail {
   email: string;
   whatsapp: string;
   perfil: string;
+  empresa: string;
   edad: string;
+  ciudad: string;
   consent: boolean;
   priority: string;
   priority_display: string;
@@ -46,6 +48,9 @@ export interface SubmissionDetail {
   last_activity_at: string;
   completed_at: string | null;
   notes_copy: string;
+  notes_objeciones: string;
+  notes_motivadores: string;
+  notes_prioridad: string;
   notes_insight: string;
   notes_offer: string;
   notes_final: string;
@@ -55,6 +60,9 @@ export interface SubmissionDetail {
 
 export interface NotesInput {
   notes_copy: string;
+  notes_objeciones: string;
+  notes_motivadores: string;
+  notes_prioridad: string;
   notes_insight: string;
   notes_offer: string;
   notes_final: string;

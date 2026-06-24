@@ -6,19 +6,19 @@ const PRIORITIES: { value: Priority; icon: string; title: string; desc: string }
     value: "appearance",
     icon: "✨",
     title: "Verse joven y sano",
-    desc: "Anti-aging, apariencia, vitalidad física, energía visible, verse bien y sentirse atractivo, fuerte y saludable.",
+    desc: "Apariencia, vitalidad física, energía, fuerza, composición corporal, anti-aging.",
   },
   {
     value: "longevity",
     icon: "⏳",
-    title: "Vivir más años",
-    desc: "Longevidad, prevención, salud futura, vivir más tiempo con calidad y reducir riesgos silenciosos.",
+    title: "Vivir más años con calidad",
+    desc: "Prevención, longevidad, biomarcadores, disminución de riesgos futuros, salud a largo plazo.",
   },
   {
     value: "mind",
     icon: "🧠",
     title: "Claridad mental y productividad",
-    desc: "Mente, enfoque, memoria, toma de decisiones, productividad, liderazgo y rendimiento cognitivo.",
+    desc: "Memoria, concentración, toma de decisiones, rendimiento cognitivo, liderazgo, productividad.",
   },
 ];
 
@@ -36,11 +36,11 @@ export function PriorityCard({
   return (
     <div className="card">
       <Logo size="sm" />
-      <div className="eyebrow">Filtro inicial</div>
-      <h1 style={{ fontSize: "clamp(26px, 4vw, 36px)" }}>
-        ¿Qué es lo más importante para ti hoy?
+      <div className="eyebrow">Filtro inicial de prioridad</div>
+      <h1 style={{ fontSize: "clamp(22px, 3.4vw, 30px)" }}>
+        Si solo pudieras mejorar una de estas áreas durante los próximos 12 meses, ¿cuál
+        elegirías?
       </h1>
-      <p className="intro">Prioricemos lo que más te mueve en este momento.</p>
 
       <div className="priority-list">
         {PRIORITIES.map((p) => (

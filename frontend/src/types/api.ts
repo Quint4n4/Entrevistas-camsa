@@ -48,7 +48,9 @@ export interface SubmissionData {
   email: string;
   whatsapp: string;
   perfil: string;
+  empresa: string;
   edad: string;
+  ciudad: string;
   consent: boolean;
   priority: Priority | "";
 }

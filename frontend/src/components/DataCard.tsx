@@ -54,7 +54,7 @@ export function DataCard({
           />
         </div>
         <div className="field">
-          <label>Perfil / cargo</label>
+          <label>Profesión / cargo</label>
           <input
             className="input"
             value={value.perfil}
@@ -63,7 +63,16 @@ export function DataCard({
           />
         </div>
         <div className="field">
-          <label>Edad aproximada</label>
+          <label>Empresa</label>
+          <input
+            className="input"
+            value={value.empresa}
+            onChange={(e) => onChange("empresa", e.target.value)}
+            placeholder="Ej. Grupo CAMSA"
+          />
+        </div>
+        <div className="field">
+          <label>Edad</label>
           <select
             className="input"
             value={value.edad}
@@ -76,6 +85,15 @@ export function DataCard({
               </option>
             ))}
           </select>
+        </div>
+        <div className="field">
+          <label>Ciudad</label>
+          <input
+            className="input"
+            value={value.ciudad}
+            onChange={(e) => onChange("ciudad", e.target.value)}
+            placeholder="Ej. Mérida"
+          />
         </div>
 
         <label className="consent">

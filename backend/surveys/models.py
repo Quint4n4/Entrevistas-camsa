@@ -108,7 +108,7 @@ class Submission(models.Model):
 
     class Priority(models.TextChoices):
         APPEARANCE = "appearance", "Verse joven y sano"
-        LONGEVITY = "longevity", "Vivir más años"
+        LONGEVITY = "longevity", "Vivir más años con calidad"
         MIND = "mind", "Claridad mental y productividad"
 
     survey = models.ForeignKey(Survey, related_name="submissions", on_delete=models.CASCADE)
@@ -118,8 +118,10 @@ class Submission(models.Model):
     nombre = models.CharField("Nombre", max_length=200, blank=True)
     email = models.EmailField("Email", blank=True)
     whatsapp = models.CharField("WhatsApp", max_length=40, blank=True)
-    perfil = models.CharField("Perfil / cargo", max_length=200, blank=True)
-    edad = models.CharField("Edad aproximada", max_length=20, blank=True)
+    perfil = models.CharField("Profesión / cargo", max_length=200, blank=True)
+    empresa = models.CharField("Empresa", max_length=200, blank=True)
+    edad = models.CharField("Edad", max_length=20, blank=True)
+    ciudad = models.CharField("Ciudad", max_length=120, blank=True)
     consent = models.BooleanField("Consentimiento", default=False)
 
     # --- Filtro inicial ---
@@ -137,10 +139,15 @@ class Submission(models.Model):
     completed_at = models.DateTimeField("Completada el", null=True, blank=True)
 
     # --- Notas estratégicas (SOLO admin, nunca las ve el cliente) ---
-    notes_copy = models.TextField("Frases para copy", blank=True)
-    notes_insight = models.TextField("Insight central", blank=True)
-    notes_offer = models.TextField("Hipótesis de oferta", blank=True)
-    notes_final = models.TextField("Notas finales", blank=True)
+    notes_copy = models.TextField("Frases textuales importantes", blank=True)
+    notes_objeciones = models.TextField("Objeciones detectadas", blank=True)
+    notes_motivadores = models.TextField("Motivadores principales", blank=True)
+    notes_prioridad = models.CharField(
+        "Prioridad dominante identificada", max_length=120, blank=True
+    )
+    notes_insight = models.TextField("Insight principal", blank=True)
+    notes_offer = models.TextField("Hipótesis de oferta para este perfil", blank=True)
+    notes_final = models.TextField("Observaciones finales", blank=True)
 
     class Meta:
         ordering = ["-started_at"]
