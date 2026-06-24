@@ -1,4 +1,5 @@
 import type { SubmissionData } from "../types/api";
+import { Logo } from "./Logo";
 
 const EDADES = ["30-40", "40-50", "50-60", "60+"];
 
@@ -18,6 +19,7 @@ export function DataCard({
 
   return (
     <div className="card">
+      <Logo size="sm" />
       <div className="eyebrow">Datos de la entrevista</div>
       <h1 style={{ fontSize: "clamp(26px, 4vw, 36px)" }}>Antes de empezar</h1>
       <p className="intro">Cuéntanos quién eres para personalizar tu experiencia.</p>

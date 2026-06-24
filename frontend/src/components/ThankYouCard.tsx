@@ -1,6 +1,9 @@
+import { Logo } from "./Logo";
+
 export function ThankYouCard({ name }: { name: string }) {
   return (
     <div className="card" style={{ textAlign: "center" }}>
+      <Logo size="lg" />
       <div style={{ fontSize: 48 }}>🌿</div>
       <h1 style={{ fontSize: "clamp(28px, 4.5vw, 42px)" }}>
         ¡Gracias{name ? `, ${name}` : ""}!

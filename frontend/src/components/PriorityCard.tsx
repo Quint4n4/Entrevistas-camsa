@@ -1,4 +1,5 @@
 import type { Priority } from "../types/api";
+import { Logo } from "./Logo";
 
 const PRIORITIES: { value: Priority; icon: string; title: string; desc: string }[] = [
   {
@@ -34,6 +35,7 @@ export function PriorityCard({
 }) {
   return (
     <div className="card">
+      <Logo size="sm" />
       <div className="eyebrow">Filtro inicial</div>
       <h1 style={{ fontSize: "clamp(26px, 4vw, 36px)" }}>
         ¿Qué es lo más importante para ti hoy?

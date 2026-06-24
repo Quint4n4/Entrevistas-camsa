@@ -107,6 +107,11 @@ body {
   .card::before { left: 24px; right: 24px; }
 }
 
+/* ---------- Logo de la clínica ---------- */
+.brand-logo { display: block; margin: 0 auto; object-fit: contain; }
+.brand-logo-lg { width: 150px; margin-bottom: 4px; margin-top: -6px; }
+.brand-logo-sm { width: 66px; margin-bottom: 6px; margin-top: -4px; }
+
 /* ---------- Tipografía ---------- */
 .eyebrow {
   font-family: var(--font-sans);

@@ -1,4 +1,5 @@
 import type { Question } from "../types/api";
+import { Logo } from "./Logo";
 
 export interface AnswerValue {
   value_text?: string;
@@ -45,6 +46,7 @@ export function QuestionCard({
 
   return (
     <div className="card">
+      <Logo size="sm" />
       <div className="eyebrow">
         Pregunta {index} de {total}
       </div>

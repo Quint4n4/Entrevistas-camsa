@@ -1,4 +1,5 @@
 import type { Survey } from "../types/api";
+import { Logo } from "./Logo";
 
 export function WelcomeCard({
   survey,
@@ -11,6 +12,7 @@ export function WelcomeCard({
 }) {
   return (
     <div className="card">
+      <Logo size="lg" />
       <div className="eyebrow">Entrevista clínica premium</div>
       <h1>{survey.title}</h1>
       <p className="intro" style={{ whiteSpace: "pre-line" }}>
