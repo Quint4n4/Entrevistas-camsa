@@ -45,6 +45,7 @@ export function QuestionEditor({
   const qc = useQueryClient();
   const [err, setErr] = useState<string | null>(null);
   const [drafts, setDrafts] = useState<Record<number, Draft>>({});
+  const [previewIndex, setPreviewIndex] = useState(0);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["admin", "structure"],
@@ -89,6 +90,12 @@ export function QuestionEditor({
     })
     .filter((q) => q.is_active);
 
+  // Hace que la vista previa salte a la pregunta que se está editando.
+  const focusQuestion = (id: number) => {
+    const i = previewQuestions.findIndex((q) => q.id === id);
+    if (i >= 0) setPreviewIndex(i);
+  };
+
   return (
     <div className="admin">
       <div className="admin-bar">
@@ -120,13 +127,18 @@ export function QuestionEditor({
                   block={b}
                   apply={apply}
                   onDraft={reportDraft}
+                  onFocusQuestion={focusQuestion}
                 />
               ))
             )}
           </div>
 
           <aside className="editor-aside">
-            <PreviewPanel questions={previewQuestions} />
+            <PreviewPanel
+              questions={previewQuestions}
+              index={previewIndex}
+              onIndexChange={setPreviewIndex}
+            />
           </aside>
         </div>
       </div>
@@ -138,10 +150,12 @@ function BlockSection({
   block,
   apply,
   onDraft,
+  onFocusQuestion,
 }: {
   block: EditorBlock;
   apply: Apply;
   onDraft: OnDraft;
+  onFocusQuestion: (id: number) => void;
 }) {
   const [title, setTitle] = useState(block.title);
   const qs = block.questions;
@@ -194,6 +208,7 @@ function BlockSection({
           apply={apply}
           onMove={move}
           onDraft={onDraft}
+          onFocusQuestion={onFocusQuestion}
         />
       ))}
 
@@ -211,6 +226,7 @@ function QuestionRow({
   apply,
   onMove,
   onDraft,
+  onFocusQuestion,
 }: {
   q: EditorQuestion;
   index: number;
@@ -218,6 +234,7 @@ function QuestionRow({
   apply: Apply;
   onMove: (index: number, dir: "up" | "down") => void;
   onDraft: OnDraft;
+  onFocusQuestion: (id: number) => void;
 }) {
   const [text, setText] = useState(q.text);
   const [help, setHelp] = useState(q.help_text);
@@ -276,7 +293,11 @@ function QuestionRow({
   };
 
   return (
-    <div className="q-edit" style={{ opacity: active ? 1 : 0.6 }}>
+    <div
+      className="q-edit"
+      style={{ opacity: active ? 1 : 0.6 }}
+      onFocusCapture={() => onFocusQuestion(q.id)}
+    >
       <div className="q-edit-top">
         <span className="eyebrow">
           Pregunta {index + 1}
@@ -430,10 +451,17 @@ function ChoiceRow({
 // --------------------------------------------------------------------------- //
 //  Vista previa lateral (como lo ve el cliente)                               //
 // --------------------------------------------------------------------------- //
-function PreviewPanel({ questions }: { questions: PreviewQuestion[] }) {
-  const [idx, setIdx] = useState(0);
+function PreviewPanel({
+  questions,
+  index,
+  onIndexChange,
+}: {
+  questions: PreviewQuestion[];
+  index: number;
+  onIndexChange: (i: number) => void;
+}) {
   const total = questions.length;
-  const safeIdx = Math.min(idx, Math.max(0, total - 1));
+  const safeIdx = Math.min(Math.max(0, index), Math.max(0, total - 1));
   const q = questions[safeIdx];
 
   return (
@@ -453,7 +481,7 @@ function PreviewPanel({ questions }: { questions: PreviewQuestion[] }) {
         <button
           className="icon-btn"
           disabled={safeIdx <= 0}
-          onClick={() => setIdx((i) => Math.max(0, i - 1))}
+          onClick={() => onIndexChange(Math.max(0, safeIdx - 1))}
           title="Anterior"
         >
           ←
@@ -462,7 +490,7 @@ function PreviewPanel({ questions }: { questions: PreviewQuestion[] }) {
         <button
           className="icon-btn"
           disabled={safeIdx >= total - 1}
-          onClick={() => setIdx((i) => Math.min(total - 1, i + 1))}
+          onClick={() => onIndexChange(Math.min(total - 1, safeIdx + 1))}
           title="Siguiente"
         >
           →
