@@ -15,6 +15,9 @@ export const surveyApi = {
   /** Crea una entrevista nueva y devuelve su token. */
   start: () => http.post<{ token: string }>("/submissions/"),
 
+  /** Verifica que una entrevista (token) todavía exista. */
+  getSubmission: (token: string) => http.get<unknown>(`/submissions/${token}/`),
+
   /** Autoguarda datos del entrevistado / prioridad. */
   saveData: (token: string, data: Partial<SubmissionData>) =>
     http.patch<unknown>(`/submissions/${token}/`, data),

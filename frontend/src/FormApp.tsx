@@ -83,7 +83,23 @@ export function FormApp() {
   const back = () => setStepIdx((i) => Math.max(i - 1, 0));
 
   async function ensureToken(): Promise<string> {
-    if (token) return token;
+    // Si hay un token guardado, verifica que la entrevista todavía exista.
+    const existing = localStorage.getItem(TOKEN_KEY);
+    if (existing) {
+      try {
+        await surveyApi.getSubmission(existing);
+        if (token !== existing) setToken(existing);
+        return existing;
+      } catch (e) {
+        // Token viejo/inválido (entrevista borrada): lo descartamos y creamos uno nuevo.
+        if (e instanceof ApiError && e.status === 404) {
+          localStorage.removeItem(TOKEN_KEY);
+          setToken(null);
+        } else {
+          throw e;
+        }
+      }
+    }
     const { token: t } = await surveyApi.start();
     localStorage.setItem(TOKEN_KEY, t);
     setToken(t);
